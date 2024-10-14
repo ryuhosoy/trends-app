@@ -25,6 +25,7 @@ function DailyTrends() {
       }
     };
     fetchDailyTrends();
+    window.addEventListener("beforeunload", fetchDailyTrends);
   }, []);
 
   return (
