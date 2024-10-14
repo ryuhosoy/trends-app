@@ -2,7 +2,16 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 function DailyTrends() {
-  const [dailyTrendsData, setDailyTrendsData] = useState<string[]>();
+  const [dailyTrendsData, setDailyTrendsData] = useState<{
+    default: {
+      trendingSearchesDays: {
+        trendingSearches: {
+          title: { query: string };
+          formattedTraffic: string;
+        }[];
+      }[];
+    };
+  } | null>(null);
 
   useEffect(() => {
     const fetchDailyTrends = async () => {
@@ -22,7 +31,7 @@ function DailyTrends() {
     <>
       <div className="dailyTrends">
         <h1>日常トレンド</h1>
-        <table border="1">
+        <table style={{ border: "1px solid black" }}>
           {dailyTrendsData ? (
             <thead>
               <tr>
@@ -37,7 +46,10 @@ function DailyTrends() {
           {dailyTrendsData ? (
             <tbody>
               {dailyTrendsData.default.trendingSearchesDays[0].trendingSearches.map(
-                (item: string[], index: number) => (
+                (
+                  item,
+                  index: number
+                ) => (
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{item.title.query}</td>

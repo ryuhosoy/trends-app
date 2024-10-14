@@ -3,10 +3,25 @@ import { useState } from "react";
 
 function RelatedQueries() {
   const [searchKeyword, setSearchKeyword] = useState<string>("");
-  const [trendsData, setTrendsData] = useState<string[]>();
+  const [trendsData, setTrendsData] = useState<{
+    rising: {
+      query: string;
+      value: number;
+      extracted_value: number;
+      link: string;
+      serpapi_link: string;
+    }[];
+    top: {
+      query: string;
+      value: number;
+      extracted_value: number;
+      link: string;
+      serpapi_link: string;
+    }[];
+  } | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
 
@@ -45,7 +60,7 @@ function RelatedQueries() {
             ""
           )}
           <h1>上昇中ランキング</h1>
-          <table border="1">
+          <table style={{ border: "1px solid black" }}>
             {trendsData ? (
               <thead>
                 <tr>
@@ -59,7 +74,7 @@ function RelatedQueries() {
             )}
             {trendsData ? (
               <tbody>
-                {trendsData.rising.map((item: string[], index: number) => (
+                {trendsData.rising.map((item, index: number) => (
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{item.query}</td>
@@ -74,7 +89,7 @@ function RelatedQueries() {
         </div>
         <div className="top">
           <h1>トップランキング</h1>
-          <table border="1">
+          <table style={{ border: "1px solid black" }}>
             {trendsData ? (
               <thead>
                 <tr>
@@ -88,7 +103,7 @@ function RelatedQueries() {
             )}
             {trendsData ? (
               <tbody>
-                {trendsData.top.map((item: string[], index: number) => (
+                {trendsData.top.map((item, index: number) => (
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{item.query}</td>
