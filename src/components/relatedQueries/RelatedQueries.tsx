@@ -27,7 +27,7 @@ function RelatedQueries() {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/relatedQueries",
+        "https://trends-app-qi5t.onrender.com//api/relatedQueries",
         { searchKeyword }
       );
       setTrendsData(response.data);
