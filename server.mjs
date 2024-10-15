@@ -11,6 +11,10 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
+app.use((req, res) => {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+});
+
 app.post("/api/relatedQueries", async (req, res) => {
   getJson(
     {
