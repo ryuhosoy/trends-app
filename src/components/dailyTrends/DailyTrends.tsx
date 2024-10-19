@@ -18,7 +18,7 @@ function DailyTrends() {
     const fetchDailyTrends = async () => {
       try {
         const response = await axios.post(
-          "http://localhost:8080/api/dailyTrends"
+          "https://trends-app-qi5t.onrender.com/api/dailyTrends"
         );
         setDailyTrendsData(response.data);
       } catch (err) {
