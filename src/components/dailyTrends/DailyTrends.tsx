@@ -8,6 +8,7 @@ function DailyTrends() {
         trendingSearches: {
           title: { query: string };
           formattedTraffic: string;
+          image: { newsUrl: string; imageUrl: string };
         }[];
       }[];
     };
@@ -17,7 +18,7 @@ function DailyTrends() {
     const fetchDailyTrends = async () => {
       try {
         const response = await axios.post(
-          "https://trends-app-qi5t.onrender.com/api/dailyTrends"
+          "http://localhost:8080/api/dailyTrends"
         );
         setDailyTrendsData(response.data);
       } catch (err) {
@@ -27,6 +28,8 @@ function DailyTrends() {
     fetchDailyTrends();
   }, []);
 
+  console.log("dailyTrendsData", dailyTrendsData);
+  
   return (
     <>
       <div className="dailyTrends">
@@ -38,6 +41,7 @@ function DailyTrends() {
                 <th>順位</th>
                 <th>タイトル</th>
                 <th>アクセス数</th>
+                <th>ニュースをクリック</th>
               </tr>
             </thead>
           ) : (
@@ -46,14 +50,16 @@ function DailyTrends() {
           {dailyTrendsData ? (
             <tbody>
               {dailyTrendsData.default.trendingSearchesDays[0].trendingSearches.map(
-                (
-                  item,
-                  index: number
-                ) => (
+                (item, index: number) => (
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{item.title.query}</td>
                     <td>{item.formattedTraffic}</td>
+                    <td>
+                      <a href={item.image.newsUrl}>
+                        <img src={item.image.imageUrl} alt="" />
+                      </a>
+                    </td>
                   </tr>
                 )
               )}

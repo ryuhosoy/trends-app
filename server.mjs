@@ -29,9 +29,12 @@ app.post("/api/relatedQueries", async (req, res) => {
 });
 
 app.post("/api/dailyTrends", async (req, res) => {
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+
   googleTrends.dailyTrends(
     {
-      trendDate: new Date("2024-10-09"),
+      trendDate: yesterday,
       geo: "JP",
       hl: "ja",
     },
