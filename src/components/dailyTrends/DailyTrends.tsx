@@ -14,19 +14,22 @@ function DailyTrends() {
     };
   } | null>(null);
 
+  const fetchDailyTrends = async () => {
+    try {
+      const response = await axios.post(
+        "https://trends-app-qi5t.onrender.com/api/dailyTrends"
+      );
+      setDailyTrendsData(response.data);
+    } catch (err) {
+      console.error("Error fetching daily trends data:", err);
+    }
+  };
+
   useEffect(() => {
-    const fetchDailyTrends = async () => {
-      try {
-        const response = await axios.post(
-          "https://trends-app-qi5t.onrender.com/api/dailyTrends"
-        );
-        setDailyTrendsData(response.data);
-      } catch (err) {
-        console.error("Error fetching daily trends data:", err);
-      }
-    };
-    setInterval(fetchDailyTrends, 60);
+    fetchDailyTrends();
   }, []);
+
+  setInterval(fetchDailyTrends, 60);
 
   console.log("dailyTrendsData", dailyTrendsData);
   
