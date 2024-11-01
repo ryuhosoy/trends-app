@@ -7,9 +7,9 @@ function Home() {
   return (
     <>
       <div className="HomeButtonWrp">
-        {/* <button onClick={() => navigate("/RelatedQueries")}>
+        <button onClick={() => navigate("/RelatedQueries")}>
           関連トレンドを見る
-        </button> */}
+        </button>
         <button onClick={() => navigate("/DailyTrends")}>
           日常トレンドを見る
         </button>
