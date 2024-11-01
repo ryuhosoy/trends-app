@@ -25,7 +25,7 @@ function DailyTrends() {
         console.error("Error fetching daily trends data:", err);
       }
     };
-    fetchDailyTrends();
+    setInterval(fetchDailyTrends, 60);
   }, []);
 
   console.log("dailyTrendsData", dailyTrendsData);
