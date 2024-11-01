@@ -29,7 +29,7 @@ function DailyTrends() {
     fetchDailyTrends();
   }, []);
 
-  setInterval(fetchDailyTrends, 60);
+  setInterval(fetchDailyTrends, 60000);
 
   console.log("dailyTrendsData", dailyTrendsData);
   
