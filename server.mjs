@@ -12,20 +12,25 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.post("/api/relatedQueries", async (req, res) => {
-  getJson(
-    {
-      engine: "google_trends",
-      q: req.body.searchKeyword,
-      data_type: "RELATED_QUERIES",
-      geo: "JP",
-      hl: "ja",
-      api_key: process.env.SERPAPI_KEY,
-    },
-    (json) => {
-      console.log(json["related_queries"]);
-      res.send(json["related_queries"]);
-    }
-  );
+  try {
+    await getJson(
+      {
+        engine: "google_trends",
+        q: req.body.searchKeyword,
+        data_type: "RELATED_QUERIES",
+        geo: "JP",
+        hl: "ja",
+        api_key: process.env.SERPAPI_KEY,
+      },
+      (json) => {
+        console.log(json["related_queries"]);
+        res.send(json["related_queries"]);
+      }
+    );
+  } catch (error) {
+    console.error("Error fetching related queries:", error);
+    res.status(500).send({ error: "Failed to fetch related queries." });
+  }
 });
 
 app.post("/api/dailyTrends", async (req, res) => {
