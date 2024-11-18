@@ -34,23 +34,31 @@ app.post("/api/relatedQueries", async (req, res) => {
 });
 
 app.post("/api/dailyTrends", async (req, res) => {
-  try {
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
 
-    const results = await dailyTrendsAsync({
+  googleTrends.dailyTrends(
+    {
       trendDate: yesterday,
       geo: "JP",
       hl: "ja",
-    });
-
-    const data = JSON.parse(results);
-    console.log(data);
-    res.send(data);
-  } catch (err) {
-    console.error("Error fetching daily trends:", err);
-    res.status(500).send({ error: "Failed to fetch daily trends" });
-  }
+    },
+    function (err, results) {
+      if (err) {
+        console.error("Error fetching daily trends:", err);
+        res.status(500).send({ error: "Failed to fetch daily trends" });
+      } else {
+        try {
+          const data = JSON.parse(results);
+          console.log(data);
+          res.send(data);
+        } catch (parseError) {
+          console.error("Error parsing results:", parseError);
+          res.status(500).send({ error: "Failed to parse trends data" });
+        }
+      }
+    }
+  );
 });
 
 const port = process.env.PORT || 4000;
