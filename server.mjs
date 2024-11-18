@@ -34,25 +34,23 @@ app.post("/api/relatedQueries", async (req, res) => {
 });
 
 app.post("/api/dailyTrends", async (req, res) => {
-  const yesterday = new Date();
-  yesterday.setDate(yesterday.getDate() - 1);
+  try {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
 
-  googleTrends.dailyTrends(
-    {
+    const results = await dailyTrendsAsync({
       trendDate: yesterday,
       geo: "JP",
       hl: "ja",
-    },
-    function (err, results) {
-      if (err) {
-        console.log(err);
-      } else {
-        const data = JSON.parse(results);
-        console.log(data);
-        res.send(data);
-      }
-    }
-  );
+    });
+
+    const data = JSON.parse(results);
+    console.log(data);
+    res.send(data);
+  } catch (err) {
+    console.error("Error fetching daily trends:", err);
+    res.status(500).send({ error: "Failed to fetch daily trends" });
+  }
 });
 
 const port = process.env.PORT || 4000;
