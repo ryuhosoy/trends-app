@@ -27,7 +27,7 @@ function RelatedQueries() {
 
     try {
       const response = await axios.post(
-        "https://trends-app-qi5t.onrender.com/api/relatedQueries",
+        "https://trends-app-backend.vercel.app/api/relatedQueries",
         { searchKeyword }
       );
       setTrendsData(response.data);
