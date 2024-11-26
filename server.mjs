@@ -11,9 +11,33 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
+const fetchJsonWithRetry = async (params, maxRetries = 3, delay = 1000) => {
+  let attempts = 0;
+  while (attempts < maxRetries) {
+    try {
+      return await new Promise((resolve, reject) => {
+        getJson(params, (json) => {
+          if (json.error) {
+            reject(new Error(json.error));
+          } else {
+            resolve(json);
+          }
+        });
+      });
+    } catch (error) {
+      attempts++;
+      if (attempts >= maxRetries) {
+        throw error; 
+      }
+      console.warn(`Retrying... (${attempts}/${maxRetries})`);
+      await new Promise((res) => setTimeout(res, delay)); // 遅延
+    }
+  }
+};
+
 app.post("/api/relatedQueries", async (req, res) => {
   try {
-    getJson(
+    const result = await fetchJsonWithRetry(
       {
         engine: "google_trends",
         q: req.body.searchKeyword,
@@ -22,13 +46,13 @@ app.post("/api/relatedQueries", async (req, res) => {
         hl: "ja",
         api_key: process.env.SERPAPI_KEY,
       },
-      (json) => {
-        console.log(json["related_queries"]);
-        res.send(json["related_queries"]);
-      }
+      3,
+      1000
     );
+    console.log(result.related_queries);
+    res.send(result.related_queries);
   } catch (error) {
-    console.error("Error fetching related queries:", error);
+    console.error("Error fetching related queries:", error.message);
     res.status(500).send({ error: "Failed to fetch related queries." });
   }
 });
