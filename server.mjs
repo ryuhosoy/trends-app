@@ -13,7 +13,7 @@ app.use(cors());
 
 app.post("/api/relatedQueries", async (req, res) => {
   try {
-    await getJson(
+    getJson(
       {
         engine: "google_trends",
         q: req.body.searchKeyword,
