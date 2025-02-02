@@ -1,50 +1,44 @@
-# React + TypeScript + Vite
+# トレンドウォッチャー
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+リアルタイムでトレンドを把握し、データドリブンな意思決定をサポートするウェブアプリケーション
 
-Currently, two official plugins are available:
+## 機能
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- デイリートレンド表示
+  - 日本のトレンドキーワードをリアルタイムで表示（1分ごとに自動更新）
+  - 各トレンドの検索ボリュームとニュース記事へのリンクを提供
+  - トレンドのランキング表示（上位20件）
+  - 各トレンドに関連する画像とニュースURLの表示
 
-## Expanding the ESLint configuration
+- 関連トレンドクエリ
+  - 特定のキーワードに関連する検索トレンドを表示
+  - トレンドの相関関係を可視化
+  - 関連キーワードの検索量比較
+  - 地域別の人気度表示
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## 技術スタック
 
-- Configure the top-level `parserOptions` property like this:
+- フロントエンド
+  - React + TypeScript
+  - Vite（高速な開発環境）
+  - React Query（データフェッチング最適化）
+  - React Router（SPA実現のためのルーティング）
+  - Axios（HTTPクライアント）
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- バックエンド
+  - Node.js + Express
+  - Google Trends API連携
+    - dailyTrends API: デイリートレンド取得
+    - relatedQueries API: 関連検索クエリ取得
+  - CORS対応
+  - エラーハンドリング実装
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+- スタイリング
+  - CSS Variables（テーマ管理）
+  - レスポンシブデザイン
+  - アクセシビリティ対応
+  - ダークモード対応
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+- デプロイメント
+  - フロントエンド: render
+  - バックエンド: Vercel Serverless Functions
