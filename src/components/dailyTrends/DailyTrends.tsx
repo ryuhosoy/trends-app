@@ -17,7 +17,7 @@ function DailyTrends() {
   const fetchDailyTrends = async () => {
     try {
       const response = await axios.post(
-        "https://trends-app-backend.vercel.app/api/dailyTrends"
+        "trends-app-backend.vercel.app/api/dailyTrends"
       );
       setDailyTrendsData(response.data);
     } catch (err) {
@@ -34,45 +34,45 @@ function DailyTrends() {
   console.log("dailyTrendsData", dailyTrendsData);
   
   return (
-    <>
-      <div className="dailyTrends">
+    <div className="daily-trends-container">
+      <div className="page-header">
         <h1>日常トレンド</h1>
-        <table style={{ border: "1px solid black" }}>
-          {dailyTrendsData ? (
-            <thead>
-              <tr>
-                <th>順位</th>
-                <th>タイトル</th>
-                <th>アクセス数</th>
-                <th>ニュースをクリック</th>
-              </tr>
-            </thead>
-          ) : (
-            ""
-          )}
-          {dailyTrendsData ? (
-            <tbody>
-              {dailyTrendsData.default.trendingSearchesDays[0].trendingSearches.map(
-                (item, index: number) => (
-                  <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>{item.title.query}</td>
-                    <td>{item.formattedTraffic}</td>
-                    <td>
-                      <a href={item.image.newsUrl}>
-                        <img src={item.image.imageUrl} alt="" />
-                      </a>
-                    </td>
-                  </tr>
-                )
-              )}
-            </tbody>
-          ) : (
-            ""
-          )}
-        </table>
       </div>
-    </>
+      <table className="trend-table">
+        {dailyTrendsData ? (
+          <thead>
+            <tr>
+              <th>順位</th>
+              <th>タイトル</th>
+              <th>アクセス数</th>
+              <th>ニュースをクリック</th>
+            </tr>
+          </thead>
+        ) : (
+          ""
+        )}
+        {dailyTrendsData ? (
+          <tbody>
+            {dailyTrendsData.default.trendingSearchesDays[0].trendingSearches.map(
+              (item, index: number) => (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td>{item.title.query}</td>
+                  <td>{item.formattedTraffic}</td>
+                  <td>
+                    <a href={item.image.newsUrl}>
+                      <img src={item.image.imageUrl} alt="" />
+                    </a>
+                  </td>
+                </tr>
+              )
+            )}
+          </tbody>
+        ) : (
+          ""
+        )}
+      </table>
+    </div>
   );
 }
 

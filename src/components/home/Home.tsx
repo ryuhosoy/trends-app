@@ -5,16 +5,20 @@ function Home() {
   const navigate = useNavigate();
 
   return (
-    <>
+    <div className="home-container">
+      <div className="home-hero">
+        <h1>トレンドウォッチャー</h1>
+        <p>リアルタイムでトレンドを把握し、データドリブンな意思決定をサポート</p>
+      </div>
       <div className="HomeButtonWrp">
-        <button onClick={() => navigate("/RelatedQueries")}>
+        <button className="btn btn-primary" onClick={() => navigate("/relatedQueries")}>
           関連トレンドを見る
         </button>
-        <button onClick={() => navigate("/DailyTrends")}>
-          日常トレンドを見る
+        <button className="btn btn-primary" onClick={() => navigate("/dailyTrends")}>
+          デイリートレンドを見る
         </button>
       </div>
-    </>
+    </div>
   );
 }
 

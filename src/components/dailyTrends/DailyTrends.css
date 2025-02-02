@@ -1,0 +1,55 @@
+.daily-trends-container {
+  padding: calc(var(--spacing-base) * 2);
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: calc(var(--spacing-base) * 4);
+}
+
+.page-header h1 {
+  font-size: 2.5rem;
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: var(--spacing-base);
+}
+
+.page-header p {
+  color: var(--text-secondary);
+  font-size: 1.125rem;
+}
+
+.error-message {
+  background: var(--error-light);
+  color: var(--error);
+  padding: var(--spacing-base);
+  border-radius: var(--border-radius);
+  margin-bottom: calc(var(--spacing-base) * 2);
+  text-align: center;
+}
+
+.trend-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--background-paper);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+}
+
+.trend-table th,
+.trend-table td {
+  padding: var(--spacing-base);
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.trend-table th {
+  background: var(--background-secondary);
+  font-weight: 600;
+}
+
+.trend-table img {
+  max-width: 100px;
+  height: auto;
+}
